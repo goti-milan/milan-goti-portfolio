@@ -2,12 +2,18 @@ import React from 'react'
 import { BiArrowFromLeft, BiArrowToRight } from 'react-icons/bi'
 import { CgArrowRight } from 'react-icons/cg'
 import StyledButton from './StyledButton'
+import ThreeRounds from '../uiComponent/threeRounds'
 
 const Contact = () => {
   return (
     <div className='p-3 bg-dark-main'>
-      <div className='text-light-main' style={{ fontSize: "100px" }}>
-        Contact
+      <div className="flex" style={{ justifyContent:"flex-end"}}>
+        <ThreeRounds />
+      </div>
+      <div className='text-light-main' style={{ fontSize: "50px" }}>
+        <span className='bg-main px-8 rounded-full'>
+          Contact
+        </span>
       </div>
       <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">

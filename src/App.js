@@ -46,7 +46,7 @@ function App() {
       <header>
         <Header openHeader={openHeader} setOpenHeader={setOpenHeader} scrollToSection={scrollToSection} />
       </header>
-      <main>
+      <main className='flex-col gap-6'>
         <section className='h-100% w-100% flex flex-col relative' style={{ minHeight: "800px" }}>
           <div className='flex justify-center relative'>
             <img src={heroImg} className='absolute' style={{ height: "788px" }} />
@@ -100,18 +100,33 @@ function App() {
         </section> */}
 
 
-        <section className='container bg-main' style={{ height: "600px", width: '90%', marginLeft: "5%", marginRight: "5%" }}>
-          <div className='p-3' style={{}}>
-            <div className='text-dark-main' style={{ fontSize: "100px" }}>
-              PROJECTS
+        <section className='container bg-white mx-[5%] w-[90%]'>
+          <div className='p-3'>
+            <div className='text-dark-main ' style={{ fontSize: "50px" }}>
+              <span className='bg-main px-8 rounded-full'>
+                PROJECTS
+              </span>
             </div>
+
+            
+
+            {/* <div className="flex items-center justify-center min-h-screen bg-gray-100">
+              <div className="relative">
+                <div className="bg-red-400 w-12 h-12 rounded-full transition-all duration-300 flex items-center justify-center hover:w-40 hover:pr-0">
+                  <span className="text-black whitespace-nowrap pl-2 opacity-100 hover:opacity-100 transition-opacity duration-300">Project</span>
+                </div>
+              </div>
+            </div> */}
+
+
+
 
 
 
           </div>
         </section>
 
-        <section id='contact' className='container bg-dark-main' style={{ height: "800px", width: '90%', marginLeft: "5%", marginRight: "5%" }}>
+        <section id='contact' className='container bg-dark-main h-[800px] mx-[5%] w-[90%]'>
           <Contact />
         </section>
 
