@@ -11,6 +11,9 @@ import Header from './component/Header';
 
 
 const technology = ['React', 'Redux', 'Angular', 'Adobe', 'Canva', 'Visual', 'Node', 'Express']
+import ProjectCard from './component/ProjectCard';
+import { projects } from './utils/static';
+import TestimonialCard from './component/TestimonialCard';
 
 function App() {
   const [openHeader, setOpenHeader] = useState(false);
@@ -77,8 +80,36 @@ function App() {
               Partnering with agencies and brands that value design and development integrity.
 
               Delivering highly executed front-end user experiences by paying close attention to the nuances of design, optimization, and performance.
+              <div>
+                <p className='font-outlined' style={{ color: "black" }}>
+                  Well, well, well, look who stumbled upon my corner of the internet! I'm Milan Goti, a freelance full-stack developer on a mission to make the web a more intuitive and visually stunning place. You'll often find me neck-deep in lines of code, armed with a relentless drive for creativity and a knack for solving complex puzzles.
+
+                  I firmly believe in working with integrity—it’s the foundation of everything I do. I’m not just here to build websites; I’m here to build experiences that users won’t forget in a hurry. And trust me, I don’t just keep up with industry trends—I set them.
+
+                  When it comes to teamwork, I’ve got a mantra: "Teamwork makes the dream work." Cliché, right? But hey, there’s a reason it’s been around for so long. I thrive in collaborative environments where diverse perspectives collide and ignite sparks of innovation.
+
+                  So, buckle up and join me on this wild ride of coding adventures. Together, we’ll create something that’ll make waves. Ready to dive in?
+                </p>
+              </div>
             </div>
 
+
+          </div>
+        </section>
+
+        <section className='container' style={{ background: "white", width: '100%', marginLeft: "5%", marginRight: "5%" }}>
+          <div className='p-3' style={{}}>
+            <div className='' style={{ fontSize: "100px" }}>
+              Technology
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project) => (
+                <ProjectCard
+                  project={project}
+                />
+              ))}
+            </div>
 
           </div>
         </section> */}
@@ -127,6 +158,16 @@ function App() {
         </section>
 
         <section id='contact' className='container bg-dark-main h-[800px] mx-[5%] w-[90%]'>
+          <div className='p-3' style={{}}>
+            <div className='' style={{ fontSize: "100px" }}>
+              Testimonials
+            </div>
+            <TestimonialCard />
+
+          </div>
+        </section>
+
+        <section className='container' style={{ height: "700px", background: "white", width: '100%', marginLeft: "5%", marginRight: "5%" }}>
           <Contact />
         </section>
 
