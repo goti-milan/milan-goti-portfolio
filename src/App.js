@@ -1,27 +1,58 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import heroImg from './assets/images/hero-image.png'
-import Contact from './component/Contact';
+import { useEffect, useState } from "react";
+import "./App.css";
+import heroImg from "./assets/images/hero-image.png";
+import Contact from "./component/Contact";
 import { FaGithub } from "react-icons/fa";
 import { IoArrowUpCircleOutline } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import Marquee from "react-fast-marquee";
-import Header from './component/Header';
+import Header from "./component/Header";
+import TestimonialCard from "./component/TestimonialCard";
+import ProjectCard from "./component/ProjectCard";
+import { projects, testimonialData } from "./utils/static";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { BsDiamondFill, BsFillCircleFill } from "react-icons/bs";
 
+const technology = [
+  "React",
+  "Redux",
+  "Angular",
+  "Adobe",
+  "Canva",
+  "Visual",
+  "Node",
+  "Express",
+];
 
-
-const technology = ['React', 'Redux', 'Angular', 'Adobe', 'Canva', 'Visual', 'Node', 'Express']
-import ProjectCard from './component/ProjectCard';
-import { projects } from './utils/static';
-import TestimonialCard from './component/TestimonialCard';
+const skills = [
+  { name: 'JavaScript', level: 'Advanced' },
+  { name: 'React', level: 'Advanced' },
+  { name: 'Node.js', level: 'Intermediate' },
+  { name: 'CSS', level: 'Advanced' },
+  { name: 'Tailwind CSS', level: 'Intermediate' },
+  // Add more skills as needed
+];
 
 function App() {
   const [openHeader, setOpenHeader] = useState(false);
-  const [yPosition, setYPosition] = useState(window.scrollY)
+  const [yPosition, setYPosition] = useState(window.scrollY);
+  const [activeSlide, setActiveSlide] = useState(0);
 
+  const settings = {
+    className: "center",
+    centerMode: true,
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    beforeChange: (current, next) => setActiveSlide(next),
+  };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -29,117 +60,214 @@ function App() {
       setYPosition(window.scrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
-    console.log('element', element);
+    console.log("element", element);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
     <div className="App">
       <header>
-        <Header openHeader={openHeader} setOpenHeader={setOpenHeader} scrollToSection={scrollToSection} />
+        <Header
+          openHeader={openHeader}
+          setOpenHeader={setOpenHeader}
+          scrollToSection={scrollToSection}
+        />
       </header>
-      <main className='flex-col gap-6'>
-        <section className='h-100% w-100% flex flex-col relative' style={{ minHeight: "800px" }}>
-          <div className='flex justify-center relative'>
-            <img src={heroImg} className='absolute' style={{ height: "788px" }} />
-            <div className=''>
-              <p className='kumar-one-outline-regular font-outlined absolute text-main' style={{ left: "30px", top: "180px", zIndex: "-1", fontSize: "147px" }}>MILAN</p>
-              <p className='kumar-one-outline-regular font-outlined absolute text-light-main' style={{ top: "400px", right: "150px", fontSize: "147px", zIndex: "-1" }}>GOTI</p>
+      <main className="flex-col gap-6">
+        <section
+          className="h-100% w-100% flex flex-col relative"
+          style={{ minHeight: "800px" }}
+        >
+          <div className="flex justify-center relative">
+            <img
+              src={heroImg}
+              className="absolute"
+              style={{ height: "788px" }}
+            />
+            <div className="">
+              <p
+                className="kumar-one-outline-regular font-outlined absolute text-main"
+                style={{
+                  left: "30px",
+                  top: "180px",
+                  zIndex: "-1",
+                  fontSize: "147px",
+                }}
+              >
+                MILAN
+              </p>
+              <p
+                className="kumar-one-outline-regular font-outlined absolute text-light-main"
+                style={{
+                  top: "400px",
+                  right: "150px",
+                  fontSize: "147px",
+                  zIndex: "-1",
+                }}
+              >
+                GOTI
+              </p>
             </div>
           </div>
-          <div className='flex-grow flex items-end'>
-            <Marquee className='text-light-main mb-10' autoFill speed={50} style={{ fontSize: "32px" }}>
-              I can be a React component, multiple React components, or just some text.
+          <div className="flex-grow flex items-end">
+            <Marquee
+              className="text-light-main mb-10"
+              autoFill
+              speed={50}
+              style={{ fontSize: "32px" }}
+            >
+              <span className="px-4">I can be a React component.</span>
+              <BsDiamondFill className="text-main text-sm" />
+              <span className="px-4">And I can be a React component.</span>
+              <BsDiamondFill className="text-main text-sm" />
+              <span className="px-4">I am milan.</span>
+              <BsDiamondFill className="text-main text-sm" />
             </Marquee>
           </div>
         </section>
 
-        {/* <section className='container bg-main' style={{ height: "600px", width: '90%', marginLeft: "5%", marginRight: "5%" }}>
-          <div className='p-3'>
-            <div className='' style={{ fontSize: "100px" }}>
-              ABOUT
-            </div>
-
-            <div>
-              Hi, I’m Matt. Nice to meet you.
-              Since beginning my journey as a freelance designer 12 years ago, I've done remote work for agencies, consulted for startups, and collaborated with talented people to create digital products for both business and consumer use. I'm quietly confident, naturally curious, and perpetually working on improving my chops.
+        <section className="container bg-light-main h-[600px] w-[90%] mx-[5%]">
+          <div className="p-3">
+            <div className="text-dark-main " style={{ fontSize: "50px" }}>
+              <span className="border border-main px-8 rounded-full hover:bg-main">
+                ABOUT
+              </span>
             </div>
             <div>
-              Specializing in refined digital web experiences with a focus on animated, responsive, and interactive content.
-              Partnering with agencies and brands that value design and development integrity.
-
-              Delivering highly executed front-end user experiences by paying close attention to the nuances of design, optimization, and performance.
+              Hi, I’m Matt. Nice to meet you. Since beginning my journey as a
+              freelance designer 12 years ago, I've done remote work for
+              agencies, consulted for startups, and collaborated with talented
+              people to create digital products for both business and consumer
+              use. I'm quietly confident, naturally curious, and perpetually
+              working on improving my chops.
+            </div>
+            <div>
+              Specializing in refined digital web experiences with a focus on
+              animated, responsive, and interactive content. Partnering with
+              agencies and brands that value design and development integrity.
+              Delivering highly executed front-end user experiences by paying
+              close attention to the nuances of design, optimization, and
+              performance.
               <div>
-                <p className='font-outlined' style={{ color: "black" }}>
-                  Well, well, well, look who stumbled upon my corner of the internet! I'm Milan Goti, a freelance full-stack developer on a mission to make the web a more intuitive and visually stunning place. You'll often find me neck-deep in lines of code, armed with a relentless drive for creativity and a knack for solving complex puzzles.
-
-                  I firmly believe in working with integrity—it’s the foundation of everything I do. I’m not just here to build websites; I’m here to build experiences that users won’t forget in a hurry. And trust me, I don’t just keep up with industry trends—I set them.
-
-                  When it comes to teamwork, I’ve got a mantra: "Teamwork makes the dream work." Cliché, right? But hey, there’s a reason it’s been around for so long. I thrive in collaborative environments where diverse perspectives collide and ignite sparks of innovation.
-
-                  So, buckle up and join me on this wild ride of coding adventures. Together, we’ll create something that’ll make waves. Ready to dive in?
+                <p className="font-outlined" style={{ color: "black" }}>
+                  Well, well, well, look who stumbled upon my corner of the
+                  internet! I'm Milan Goti, a freelance full-stack developer on
+                  a mission to make the web a more intuitive and visually
+                  stunning place. You'll often find me neck-deep in lines of
+                  code, armed with a relentless drive for creativity and a knack
+                  for solving complex puzzles. I firmly believe in working with
+                  integrity—it’s the foundation of everything I do. I’m not just
+                  here to build websites; I’m here to build experiences that
+                  users won’t forget in a hurry. And trust me, I don’t just keep
+                  up with industry trends—I set them. When it comes to teamwork,
+                  I’ve got a mantra: "Teamwork makes the dream work." Cliché,
+                  right? But hey, there’s a reason it’s been around for so long.
+                  I thrive in collaborative environments where diverse
+                  perspectives collide and ignite sparks of innovation. So,
+                  buckle up and join me on this wild ride of coding adventures.
+                  Together, we’ll create something that’ll make waves. Ready to
+                  dive in?
                 </p>
               </div>
             </div>
-
-
           </div>
         </section>
 
-        <section className='container' style={{ background: "white", width: '100%', marginLeft: "5%", marginRight: "5%" }}>
-          <div className='p-3' style={{}}>
-            <div className='' style={{ fontSize: "100px" }}>
-              Technology
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
-                <ProjectCard
-                  project={project}
-                />
+        <section className="bg-gray-100 py-12">
+          <div className="container mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-8">My Skills</h2>
+            <div className="flex flex-wrap justify-center">
+              {skills.map((skill, index) => (
+                <div className="bg-white shadow-lg rounded-lg p-4 m-4 w-60">
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    {skill.name}
+                  </h3>
+                  <p className="text-gray-500"></p>
+                </div>
               ))}
             </div>
-
           </div>
-        </section> */}
+        </section>
 
-        {/* <section id='skills' className='container bg-dark-main' style={{ height: "100%", width: '90%', marginLeft: "5%", marginRight: "5%" }}>
-          <div className='text-light-main' style={{ display: 'grid', textAlign: 'right' }}>
-            <div style={{ fontSize: '100px', width: '100%', justifySelf: 'end' }}>
-              SKILLS
+        <section
+          id="skills"
+          className="container bg-light-main"
+          style={{
+            height: "100%",
+            width: "90%",
+            marginLeft: "5%",
+            marginRight: "5%",
+          }}
+        >
+          <div
+            className="text-drak-main"
+            style={{ display: "grid", textAlign: "right" }}
+          >
+            <div className="text-dark-main " style={{ fontSize: "50px" }}>
+              <span className="border border-main px-8 rounded-full hover:bg-main">
+                SKILLS
+              </span>
             </div>
-            <div style={{ fontSize: '20px' }}>
-              Tech I am proficient with:
-            </div>
+            <div style={{ fontSize: "20px" }}>Tech I am proficient with:</div>
+            {/* <div className="skills_1">
+              <div className="responsive-container-block bigContainer">
+                <div className="responsive-container-block Container">
+                  <div className="responsive-container-block cardContainer">
+                    <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
+                      <div className="card">
+                        <p className="text-blk stats">75K+</p>
+                        <p className="text-blk cardHeading">
+                          Lorem ipsum dolor sit amet, consectetur adip
+                        </p>
+                      </div>
+                    </div>
+                    <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
+                      <div className="card">
+                        <p className="text-blk stats">95%</p>
+                        <p className="text-blk cardHeading">
+                          Lorem ipsum dolor sit amet, consectetur adip
+                        </p>
+                      </div>
+                    </div>
+                    <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
+                      <div className="card">
+                        <p className="text-blk stats">4.8</p>
+                        <p className="text-blk cardHeading">
+                          Lorem ipsum dolor sit amet, consectetur adip
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> */}
           </div>
-          <div className='text-light-main flex flex-col gap-5 bg-dark-main '>
-            {technology?.map((tech, i) =>
-              <p id={`skillset-${i}`} key={i} className='link-item font-normal text-9xl antialiased hover:text-main skillset-1 cursor-pointer '>{tech}</p>
-            )}
-          </div>
-        </section> */}
+        
+        </section>
 
-
-        <section className='container bg-white mx-[5%] w-[90%]'>
-          <div className='p-3'>
-            <div className='text-dark-main ' style={{ fontSize: "50px" }}>
-              <span className='bg-main px-8 rounded-full'>
+        <section className="container bg-white mx-[5%] w-[90%]">
+          <div className="p-3">
+            <div className="text-dark-main " style={{ fontSize: "50px" }}>
+              <span className="border border-main px-8 rounded-full hover:bg-main">
                 PROJECTS
               </span>
             </div>
-
-            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project) => (
+                <ProjectCard project={project} />
+              ))}
+            </div>
 
             {/* <div className="flex items-center justify-center min-h-screen bg-gray-100">
               <div className="relative">
@@ -148,47 +276,68 @@ function App() {
                 </div>
               </div>
             </div> */}
-
-
-
-
-
-
           </div>
         </section>
 
-        <section id='contact' className='container bg-dark-main h-[800px] mx-[5%] w-[90%]'>
-          <div className='p-3' style={{}}>
-            <div className='' style={{ fontSize: "100px" }}>
-              Testimonials
+        <section
+          id="contact"
+          className="container bg-dark-main mx-[5%] w-[90%]"
+        >
+          <div className="p-3">
+            <div className="text-light-main" style={{ fontSize: "50px" }}>
+              <span className="border border-main px-8 rounded-full">
+                Testimonials
+              </span>
             </div>
-            <TestimonialCard />
-
+            <div className="py-12 flex">
+              <div className="container mx-auto px-6 text-center">
+                <Slider {...settings}>
+                  {testimonialData.map((testimonial, index) => (
+                    <div className="p-4">
+                      <TestimonialCard
+                        testimonial={testimonial}
+                        key={index}
+                        isActive={index === activeSlide}
+                      />
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className='container' style={{ height: "700px", background: "white", width: '100%', marginLeft: "5%", marginRight: "5%" }}>
+        <section className="container bg-light-main mx-[5%] w-[90%]">
           <Contact />
         </section>
 
         <div className="absolute  right-2 sticky flex justify-end">
-          {window.scrollY > 1 ?
+          {window.scrollY > 1 ? (
             <IoArrowUpCircleOutline
               className="text-light-main text-6xl hover:text-main"
               onClick={() => scrollToTop()}
-
-            /> : null}
+            />
+          ) : null}
         </div>
-
       </main>
 
-      <footer className="relative flex items-center px-10 justify-between bg-main text-light-main" style={{ height: "200px", width: "100%" }}>
-
+      <footer
+        className="relative flex items-center px-10 justify-between bg-main text-light-main"
+        style={{ height: "200px", width: "100%" }}
+      >
         <div className="flex flex-col gap-1 text-dark-main">
-          <a href="#" className="hover:text-light-main">About Me</a>
-          <a href="#" className="hover:text-light-main">Technology</a>
-          <a href="#" className="hover:text-light-main">Work</a>
-          <a href="#" className="hover:text-light-main">Contact</a>
+          <a href="#" className="hover:text-light-main">
+            About Me
+          </a>
+          <a href="#" className="hover:text-light-main">
+            Technology
+          </a>
+          <a href="#" className="hover:text-light-main">
+            Work
+          </a>
+          <a href="#" className="hover:text-light-main">
+            Contact
+          </a>
         </div>
 
         <div className="flex items-center gap-2">
@@ -198,14 +347,11 @@ function App() {
         <div className="flex flex-col gap-2 text-dark-main">
           <p className="flex gap-1 text-center text-sm mt-4">
             Made with
-            <FaHeart className='text-light-main color-light-main' />
+            <FaHeart className="text-light-main color-light-main" />
             by Milan Goti
           </p>
         </div>
-
       </footer>
-
-
     </div>
   );
 }
