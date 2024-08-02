@@ -13,32 +13,46 @@ import { projects, testimonialData } from "./utils/static";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { BsDiamondFill, BsFillCircleFill } from "react-icons/bs";
+import { BsDiamondFill } from "react-icons/bs";
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
-const technology = [
-  "React",
-  "Redux",
-  "Angular",
-  "Adobe",
-  "Canva",
-  "Visual",
-  "Node",
-  "Express",
-];
 
 const skills = [
-  { name: 'JavaScript', level: 'Advanced' },
-  { name: 'React', level: 'Advanced' },
-  { name: 'Node.js', level: 'Intermediate' },
-  { name: 'CSS', level: 'Advanced' },
-  { name: 'Tailwind CSS', level: 'Intermediate' },
-  // Add more skills as needed
+  { id: 0, name: 'JavaScript', level: "87" },
+  { id: 1, name: 'React', level: "85" },
+  { id: 2, name: 'Node.js', level: "65" },
+  { id: 3, name: 'CSS', level: "83" },
+  { id: 4, name: 'Tailwind CSS', level: "67" },
 ];
 
 function App() {
   const [openHeader, setOpenHeader] = useState(false);
   const [yPosition, setYPosition] = useState(window.scrollY);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [progress, setProgress] = useState(skills[0]?.level);
+  const [selectedSkill, setSelectedSkill] = useState()
+
+
+  console.log('selectedSkill', selectedSkill);
+
+  useEffect(() => {
+    setSelectedSkill(skills[0])
+  }, [skills])
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => (prev < selectedSkill?.level ? prev + 1 : prev));
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [selectedSkill]);
+
+  const handleSkillClick = (skill) => {
+    setSelectedSkill(skill);
+  };
+
 
   const settings = {
     className: "center",
@@ -184,22 +198,6 @@ function App() {
           </div>
         </section>
 
-        <section className="bg-gray-100 py-12">
-          <div className="container mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-8">My Skills</h2>
-            <div className="flex flex-wrap justify-center">
-              {skills.map((skill, index) => (
-                <div className="bg-white shadow-lg rounded-lg p-4 m-4 w-60">
-                  <h3 className="text-lg font-semibold text-gray-700">
-                    {skill.name}
-                  </h3>
-                  <p className="text-gray-500"></p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section
           id="skills"
           className="container bg-light-main"
@@ -212,21 +210,62 @@ function App() {
         >
           <div
             className="text-drak-main"
-            style={{ display: "grid", textAlign: "right" }}
+            style={{ display: "grid", textAlign: "left" }}
           >
-            <div className="text-dark-main " style={{ fontSize: "50px" }}>
-              <span className="border border-main px-8 rounded-full hover:bg-main">
-                SKILLS
-              </span>
+            <div className="p-3">
+              <div className="text-dark-main " style={{ fontSize: "50px" }}>
+                <span className="border border-main px-8 rounded-full hover:bg-main">
+                  SKILLS
+                </span>
+              </div>
+              <div style={{ fontSize: "20px" }}>Tech I am proficient with:</div>
+
+              <div className="flex flex-wrap justify-between items-start p-8 bg-gray-100 ">
+                {/* Skills Section */}
+                <div className="flex flex-wrap justify-center w-full md:w-1/2">
+                  {skills.map((skill, index) => (
+                    <div
+                      key={skill?.id}
+                      className="bg-white shadow-lg rounded-lg p-4 m-4 w-60 cursor-pointer"
+                      style={{
+                        border: selectedSkill?.id === skill?.id ? '1px solid red' : 'none',
+                      }}
+                      onClick={() => handleSkillClick(skill)}
+                    >
+                      <h3 className="text-lg font-semibold text-gray-700">{skill.name}</h3>
+                      <p className="text-gray-500">{skill.description}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Progress Bar Section */}
+                <div className="w-full md:w-1/2 flex justify-center items-center">
+                  <div className="h-[250px] w-[250px]">
+                    <CircularProgressbar
+                      value={progress}
+                      text={`${progress}%`}
+                      styles={buildStyles({
+                        pathColor: '#ff4901',
+                        textColor: '#ff4901',
+                        trailColor: 'light-gray',
+                        backgroundColor: '#f3f3f3',
+                        pathTransition: 'stroke-dashoffset 1s ease 0s',
+                        pathTransitionDuration: 1,
+                        strokeLinecap: 'butt',
+                      })}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div style={{ fontSize: "20px" }}>Tech I am proficient with:</div>
-            {/* <div className="skills_1">
+
+            <div className="skills_1">
               <div className="responsive-container-block bigContainer">
                 <div className="responsive-container-block Container">
                   <div className="responsive-container-block cardContainer">
                     <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
                       <div className="card">
-                        <p className="text-blk stats">75K+</p>
+                        <p className="text-main text-5xl stats">75K+</p>
                         <p className="text-blk cardHeading">
                           Lorem ipsum dolor sit amet, consectetur adip
                         </p>
@@ -234,7 +273,7 @@ function App() {
                     </div>
                     <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
                       <div className="card">
-                        <p className="text-blk stats">95%</p>
+                        <p className="text-main text-5xl stats">95%</p>
                         <p className="text-blk cardHeading">
                           Lorem ipsum dolor sit amet, consectetur adip
                         </p>
@@ -242,7 +281,7 @@ function App() {
                     </div>
                     <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
                       <div className="card">
-                        <p className="text-blk stats">4.8</p>
+                        <p className="text-main text-5xl stats">4.8</p>
                         <p className="text-blk cardHeading">
                           Lorem ipsum dolor sit amet, consectetur adip
                         </p>
@@ -251,9 +290,8 @@ function App() {
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
-        
         </section>
 
         <section className="container bg-white mx-[5%] w-[90%]">
@@ -281,10 +319,10 @@ function App() {
 
         <section
           id="contact"
-          className="container bg-dark-main mx-[5%] w-[90%]"
+          className="container bg-light-main mx-[5%] w-[90%]"
         >
           <div className="p-3">
-            <div className="text-light-main" style={{ fontSize: "50px" }}>
+            <div className="text-dark-main" style={{ fontSize: "50px" }}>
               <span className="border border-main px-8 rounded-full">
                 Testimonials
               </span>

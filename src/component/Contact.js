@@ -13,11 +13,11 @@ const Contact = () => {
       <div className="text-dark-main" style={{ fontSize: "50px" }}>
         <span className="border border-main px-8 rounded-full">Contact</span>
       </div>
-      <div className="bg-dark-main w-full">
+      <div className="bg-black-500 w-full">
         <form
           action="#"
           method="POST"
-          className="mx-auto max-w-xl bg-dark-main p-8"
+          className="mx-auto max-w-xl bg-dark-main-100 p-8"
         >
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div>
