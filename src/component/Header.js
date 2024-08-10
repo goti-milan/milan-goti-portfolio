@@ -12,15 +12,11 @@ const Header = ({ openHeader, setOpenHeader, scrollToSection }) => {
                     scrollToSection={scrollToSection}
                 />}
             <button
-                className='h-16'
-                style={{
-                    transform: `rotateZ(${openHeader ? 45 : 0}deg)`,
-                    transition: 'transform 1s',
-                    position: 'sticky'
-                }}
+                className={`h-16 transform transition-transform duration-1000 fixed ${openHeader ? 'rotate-45' : 'rotate-0'} top-5 right-5`}
                 onClick={() => setOpenHeader(!openHeader)}>
-                <IoMdAdd className='text-6xl' style={{ color: '#ff4901' }} />
+                <IoMdAdd className='text-6xl text-[#ff4901]' />
             </button>
+
         </div>
     )
 }

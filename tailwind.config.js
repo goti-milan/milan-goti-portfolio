@@ -10,7 +10,7 @@ module.exports = {
         'dark-main': '#000000',
       },
       fontFamily: {
-        
+
       },
     },
   },

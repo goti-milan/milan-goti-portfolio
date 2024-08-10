@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import heroImg from "./assets/images/hero-image.png";
 import Contact from "./component/Contact";
@@ -16,7 +16,9 @@ import Slider from "react-slick";
 import { BsDiamondFill } from "react-icons/bs";
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-
+import LocomotiveScroll from 'locomotive-scroll';
+// import { motion } from "framer-motion"
+import SectionTitle from "./component/sectionTitle";
 
 const skills = [
   { id: 0, name: 'JavaScript', level: "87" },
@@ -26,15 +28,22 @@ const skills = [
   { id: 4, name: 'Tailwind CSS', level: "67" },
 ];
 
+const statData = [
+  { id: 0, name: 'Projects', value: '75+' },
+  { id: 1, name: 'Hours', value: '24596+' },
+  { id: 2, name: 'Coffee', value: '8452+' },
+
+]
+
 function App() {
   const [openHeader, setOpenHeader] = useState(false);
   const [yPosition, setYPosition] = useState(window.scrollY);
   const [activeSlide, setActiveSlide] = useState(0);
   const [progress, setProgress] = useState(skills[0]?.level);
   const [selectedSkill, setSelectedSkill] = useState()
+  const locomotiveScroll = new LocomotiveScroll();
 
 
-  console.log('selectedSkill', selectedSkill);
 
   useEffect(() => {
     setSelectedSkill(skills[0])
@@ -52,6 +61,24 @@ function App() {
   const handleSkillClick = (skill) => {
     setSelectedSkill(skill);
   };
+
+  const progressBarCallBack = useCallback(() => (
+    <CircularProgressbar
+      value={selectedSkill?.level}
+      text={`${selectedSkill?.level}%`}
+      styles={buildStyles({
+        pathColor: '#ff4901',
+        textColor: '#ff4901',
+        trailColor: 'light-gray',
+        backgroundColor: '#f3f3f3',
+        pathTransition: 'stroke-dashoffset 1s ease 0s',
+        pathTransitionDuration: 1,
+        strokeLinecap: 'butt',
+      })}
+    />
+  ), [selectedSkill, skills]);
+
+
 
 
   const settings = {
@@ -100,58 +127,59 @@ function App() {
       </header>
       <main className="flex-col gap-6">
         <section
-          className="h-100% w-100% flex flex-col relative"
-          style={{ minHeight: "800px" }}
+          className="h-screen w-full flex flex-col relative"
         >
           <div className="flex justify-center relative">
-            <img
-              src={heroImg}
-              className="absolute"
-              style={{ height: "788px" }}
-            />
+            {/*   */}
             <div className="">
-              <p
-                className="kumar-one-outline-regular font-outlined absolute text-main"
-                style={{
+              {["MILAN", "GOTI"]?.map((item, index) => {
+                const className = index === 0 ?
+                  "kumar-one-outline-regular font-outlined absolute text-main" :
+                  "kumar-one-outline-regular font-outlined absolute text-light-main"
+                const style = index === 0 ? {
                   left: "30px",
                   top: "180px",
                   zIndex: "-1",
                   fontSize: "147px",
-                }}
-              >
-                MILAN
-              </p>
-              <p
-                className="kumar-one-outline-regular font-outlined absolute text-light-main"
-                style={{
+                } : {
                   top: "400px",
                   right: "150px",
                   fontSize: "147px",
                   zIndex: "-1",
-                }}
-              >
-                GOTI
-              </p>
+                }
+                return (
+                  <p
+                    key={index}
+                    className={className}
+                    style={style}
+                  >
+                    {item}
+                  </p>
+                )
+              })}
             </div>
-          </div>
-          <div className="flex-grow flex items-end">
-            <Marquee
-              className="text-light-main mb-10"
-              autoFill
-              speed={50}
-              style={{ fontSize: "32px" }}
-            >
-              <span className="px-4">I can be a React component.</span>
-              <BsDiamondFill className="text-main text-sm" />
-              <span className="px-4">And I can be a React component.</span>
-              <BsDiamondFill className="text-main text-sm" />
-              <span className="px-4">I am milan.</span>
-              <BsDiamondFill className="text-main text-sm" />
-            </Marquee>
           </div>
         </section>
 
-        <section className="container bg-light-main h-[600px] w-[90%] mx-[5%]">
+        <div>
+          <Marquee
+            className=" w-full h-[full-content] py-10 bg-main text-light-main leading"
+            autoFill
+            speed={150}
+          >
+            <div className="flex items-center border border-light p-4">
+              {["I can be a React component", "And I can be a React component", "I am Milan"].map((item, index) => (
+                <div key={index} className="flex items-center text-[10vw] gap-4 mb-6">
+                  <span className="px-4 uppercase leading-none">{item}</span>
+                  <BsDiamondFill className="text-black text-4xl " />
+                </div>
+              ))}
+            </div>
+          </Marquee>
+        </div>
+
+
+        <section className="container bg-light-main h-screen w-full">
           <div className="p-3">
             <div className="text-dark-main " style={{ fontSize: "50px" }}>
               <span className="border border-main px-8 rounded-full hover:bg-main">
@@ -200,94 +228,49 @@ function App() {
 
         <section
           id="skills"
-          className="container bg-light-main"
-          style={{
-            height: "100%",
-            width: "90%",
-            marginLeft: "5%",
-            marginRight: "5%",
-          }}
+          className="container bg-light-main h-screen w-full"
         >
           <div
             className="text-drak-main"
             style={{ display: "grid", textAlign: "left" }}
           >
             <div className="p-3">
-              <div className="text-dark-main " style={{ fontSize: "50px" }}>
-                <span className="border border-main px-8 rounded-full hover:bg-main">
-                  SKILLS
-                </span>
-              </div>
+              <SectionTitle title={"skills"} />
               <div style={{ fontSize: "20px" }}>Tech I am proficient with:</div>
-
               <div className="flex flex-wrap justify-between items-start p-8 bg-gray-100 ">
-                {/* Skills Section */}
                 <div className="flex flex-wrap justify-center w-full md:w-1/2">
-                  {skills.map((skill, index) => (
+                  {skills.map((skill) => (
                     <div
-                      key={skill?.id}
-                      className="bg-white shadow-lg rounded-lg p-4 m-4 w-60 cursor-pointer"
-                      style={{
-                        border: selectedSkill?.id === skill?.id ? '1px solid red' : 'none',
-                      }}
+                      key={skill.id}
+                      className={`bg-white shadow-lg rounded-lg p-4 m-4 w-60 cursor-pointer hover:border-main 
+                      ${selectedSkill?.id === skill?.id ? 'border border-red-500' : ''}`}
                       onClick={() => handleSkillClick(skill)}
                     >
-                      <h3 className="text-lg font-semibold text-gray-700">{skill.name}</h3>
-                      <p className="text-gray-500">{skill.description}</p>
+                      <h3 className="text-lg font-semibold text-gray-700">{skill.value}</h3>
+                      <p className="text-gray-500">{skill.name}</p>
                     </div>
                   ))}
                 </div>
-
-                {/* Progress Bar Section */}
                 <div className="w-full md:w-1/2 flex justify-center items-center">
                   <div className="h-[250px] w-[250px]">
-                    <CircularProgressbar
-                      value={progress}
-                      text={`${progress}%`}
-                      styles={buildStyles({
-                        pathColor: '#ff4901',
-                        textColor: '#ff4901',
-                        trailColor: 'light-gray',
-                        backgroundColor: '#f3f3f3',
-                        pathTransition: 'stroke-dashoffset 1s ease 0s',
-                        pathTransitionDuration: 1,
-                        strokeLinecap: 'butt',
-                      })}
-                    />
+                    {progressBarCallBack()}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="skills_1">
-              <div className="responsive-container-block bigContainer">
-                <div className="responsive-container-block Container">
-                  <div className="responsive-container-block cardContainer">
-                    <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
-                      <div className="card">
-                        <p className="text-main text-5xl stats">75K+</p>
-                        <p className="text-blk cardHeading">
-                          Lorem ipsum dolor sit amet, consectetur adip
-                        </p>
-                      </div>
+            <div className="responsive-container-block bigContainer p-4">
+              <div className="responsive-container-block Container">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 responsive-container-block cardContainer">
+                  {statData?.map((stat) => (
+                    <div
+                      key={stat?.id}
+                      className="border border-dark-main p-4 rounded-lg shadow-lg flex flex-col items-center justify-center text-center"
+                    >
+                      <p className="text-main text-5xl font-bold mb-2">{stat?.value}</p>
+                      <p className="text-blk cardHeading text-lg font-semibold">{stat?.name}</p>
                     </div>
-                    <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
-                      <div className="card">
-                        <p className="text-main text-5xl stats">95%</p>
-                        <p className="text-blk cardHeading">
-                          Lorem ipsum dolor sit amet, consectetur adip
-                        </p>
-                      </div>
-                    </div>
-                    <div className="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
-                      <div className="card">
-                        <p className="text-main text-5xl stats">4.8</p>
-                        <p className="text-blk cardHeading">
-                          Lorem ipsum dolor sit amet, consectetur adip
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -296,24 +279,15 @@ function App() {
 
         <section className="container bg-white mx-[5%] w-[90%]">
           <div className="p-3">
-            <div className="text-dark-main " style={{ fontSize: "50px" }}>
-              <span className="border border-main px-8 rounded-full hover:bg-main">
-                PROJECTS
-              </span>
-            </div>
+            <SectionTitle title={"Project"} />
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
-                <ProjectCard project={project} />
+              {projects.map((project, index) => (
+                <ProjectCard key={index} project={project} />
               ))}
             </div>
 
-            {/* <div className="flex items-center justify-center min-h-screen bg-gray-100">
-              <div className="relative">
-                <div className="bg-red-400 w-12 h-12 rounded-full transition-all duration-300 flex items-center justify-center hover:w-40 hover:pr-0">
-                  <span className="text-black whitespace-nowrap pl-2 opacity-100 hover:opacity-100 transition-opacity duration-300">Project</span>
-                </div>
-              </div>
-            </div> */}
+
           </div>
         </section>
 
@@ -322,11 +296,9 @@ function App() {
           className="container bg-light-main mx-[5%] w-[90%]"
         >
           <div className="p-3">
-            <div className="text-dark-main" style={{ fontSize: "50px" }}>
-              <span className="border border-main px-8 rounded-full">
-                Testimonials
-              </span>
-            </div>
+            <SectionTitle title={"Testimonials"} />
+
+
             <div className="py-12 flex">
               <div className="container mx-auto px-6 text-center">
                 <Slider {...settings}>
