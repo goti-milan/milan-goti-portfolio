@@ -1,25 +1,24 @@
 import React from "react";
-import { BiArrowFromLeft, BiArrowToRight } from "react-icons/bi";
-import { CgArrowRight } from "react-icons/cg";
+import SectionTitle from "./sectionTitle";
 import StyledButton from "./StyledButton";
-import ThreeRounds from "../uiComponent/threeRounds";
 
 const Contact = () => {
   return (
-    <div className="p-3 bg-light-main">
-      {/* <div className="flex" style={{ justifyContent:"flex-end"}}>
-        <ThreeRounds />
-      </div> */}
-      <div className="text-dark-main" style={{ fontSize: "50px" }}>
-        <span className="border border-main px-8 rounded-full">Contact</span>
-      </div>
-      <div className="bg-black-500 w-full">
-        <form
-          action="#"
-          method="POST"
-          className="mx-auto max-w-xl bg-dark-main-100 p-8"
-        >
-          <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+    <section
+      data-scroll
+      data-scroll-section
+      data-scroll-speed="-0.05"
+      className="bg-light-main w-full py-16"
+    >
+      <div className="bg-light-main p-6 md:p-12">
+        <SectionTitle title={"Contact"} />
+
+        <div className="bg-dark-main w-full max-w-4xl mx-auto p-8 rounded-lg shadow-lg">
+          <form
+            action="#"
+            method="POST"
+            className="grid grid-cols-1 gap-8 sm:grid-cols-2"
+          >
             <div>
               <label
                 htmlFor="name"
@@ -27,33 +26,29 @@ const Contact = () => {
               >
                 Name
               </label>
-              <div className="mt-2.5">
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-dark-main shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autoComplete="given-name"
+                className="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-dark-main shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-main sm:text-sm"
+              />
             </div>
 
-            <div className="">
+            <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-semibold leading-6 text-main"
               >
                 Email
               </label>
-              <div className="mt-2.5">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-dark-main shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-orange-00 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                className="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-dark-main shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-main sm:text-sm"
+              />
             </div>
 
             <div className="sm:col-span-2">
@@ -63,15 +58,13 @@ const Contact = () => {
               >
                 Subject
               </label>
-              <div className="mt-2.5">
-                <input
-                  id="subject"
-                  name="Subject"
-                  type="text"
-                  autoComplete="organization"
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-black-700 shadow-sm ring-1 ring-inset ring-orange-300 placeholder:text-main focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+              <input
+                id="subject"
+                name="subject"
+                type="text"
+                autoComplete="organization"
+                className="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-dark-main shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-main sm:text-sm"
+              />
             </div>
 
             <div className="sm:col-span-2">
@@ -81,23 +74,22 @@ const Contact = () => {
               >
                 Message
               </label>
-              <div className="mt-2.5">
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-dark-main shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-main sm:text-sm sm:leading-6"
-                  defaultValue={""}
-                />
-              </div>
+              <textarea
+                id="message"
+                name="message"
+                rows={4}
+                className="block w-full rounded-md border border-gray-300 px-3.5 py-2 text-dark-main shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-main sm:text-sm"
+                defaultValue={""}
+              />
             </div>
-          </div>
-          <div className="mt-10">
-            <StyledButton title={`Let's Talk`} />
-          </div>
-        </form>
+
+            <div className="sm:col-span-2 mt-6">
+              <StyledButton title={`Let's Talk`} />
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
